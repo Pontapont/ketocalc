@@ -1,0 +1,534 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --results-text-color: #fff;
+    --results-image-color: #bc4749;
+    --color-calc-header: #6b38c4;
+    --color-calc-img: rgb(255, 142, 161);
+    --color-calc-text: rgb(20, 20, 71);
+    --second-color-calc: #b09bd6;
+    --background-color: rgb(255, 208, 120);
+}
+
+
+button {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    
+}
+
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to top, var(--background-color) 40%, #fff);
+    background-repeat: no-repeat;
+    font-family: "Roboto Mono", monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CALC OUTSIDE */
+
+.calc-container {
+    margin-right: 200px;
+    position: relative;
+    width: 60%;
+    border-radius: 10px;
+    border: 4px solid lightgray;
+    background-color: #fff;
+}
+
+.main-content {
+    pointer-events: auto;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: inherit;
+}
+
+.main-content.inactive {
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+.calc-header {
+    padding: 25px 0px 25px 100px;
+    height: 125px;
+    background: linear-gradient(to right, var(--color-calc-header) 10%, #cab4ff);
+    flex-basis: 100%;
+    margin: 0; /* Add this line */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5rem;
+    border-top-left-radius: inherit;
+}
+
+#img__calculator {
+    position: relative;
+    fill: rgb(248, 164, 54);
+    height: 100%;
+    max-width: 100%;
+}
+
+.calc-header h1 {
+    color: #fff;
+    font-size: 2.5rem;
+}
+/* ------------------- */
+
+
+
+/* NEW PROTOTYPE SEARCH BAR */
+
+.searchbar-container {
+    width: 100%;
+}
+
+.searchbar-container h2 {
+    margin: 30px 0px 0px 40px;
+    font-size: 1rem;
+}
+
+.searchbar {
+    --height-searchbar: 40px;
+    height: var(--height-searchbar);
+    margin: 15px 0px 0px 40px;
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.searchbar input {
+    padding-left: 40px;
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 300px;
+    border-radius: 10px;
+}
+
+.suggestions {
+    position: absolute;
+    top: 0;
+    transform: translateY(40px);
+    width: 200px;
+    border: 1px solid #ddd;
+    background: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 10px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    max-height: 30px;
+  }
+  
+  .suggestion-item:hover {
+    background: #f0f0f0;
+  }
+
+#search-icon {
+    position: absolute;
+    height: calc(var(--height-searchbar) - 5px);
+    fill: rgb(151, 151, 151);
+}
+
+
+/* NEW PROTOTYPE SEARCH BAR END*/
+
+.calc-body {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 250px minmax(250px, 1fr);
+}
+
+.search-wrapper {
+    display: flex;
+    background-color: var(--second-color-calc);
+}
+
+
+.ingredient-list {
+    position: relative;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.ingredient-list::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--color-calc-header) 15%, #fff);
+}
+
+.ingredient-list::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to left, var(--second-color-calc) 20%, #d4d4d4);
+}
+
+.ingredient-list-container {
+    padding: 20px;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--color-calc-text);
+}
+
+.ingredient-list-container.show {
+    display: flex;
+}
+
+
+.ingredient-list h2 {
+    flex-basis: 50%;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
+#selectedIngredients {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 100px;
+    column-gap: 0.5rem;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+#selectedIngredients.show {
+    display: grid;
+}
+
+.selected-list-item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    align-items: center;
+    border: 3px solid rgb(0, 102, 255);
+}
+
+.selected-list-item.selected {
+    border: 3px solid red;
+}
+
+.selected-list-item:hover {
+    cursor: pointer;
+}
+
+.selected-list-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.selected-ingredient-information {
+    max-width: 50%;
+}
+
+.selected-ingredient-name {
+    font-size: 1rem;
+}
+
+.add-grams {
+    border: 3px solid red;
+    border-top: none;
+    border-radius: 3px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 97px;
+    left: -3px;
+    right: -3px;
+    transform: translateY(-100%);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+    z-index: -1;
+    align-items: center;
+    display: flex;
+}
+
+.add-grams.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0px);
+    z-index: 1;
+}
+
+.add-grams input {
+    padding: 10px;
+    height: 40px;
+    outline: none;
+    border: none;
+    margin: 0;
+    width: 100%;
+}
+
+#addIngredient {
+    position: absolute;
+    color: white;
+    background-color: rgb(0, 110, 255);
+    padding: 5px;
+    right: 0;
+    margin-right: 6px;
+}
+
+#addIngredient:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#cardsImage {
+    height: 150px;
+    width: 100px;
+    fill: var(--color-calc-text);
+}
+
+#ingredientList {
+    display: none;
+}
+
+/* ------------------- */
+
+.calc-ingredients {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 110px;
+    color: var(--color-calc-text);
+    grid-column: 1 / 3;
+}
+
+.card {
+    display: flex;
+    border: 3px solid lightgray;
+    border-left: none;
+    background-color: white;
+    padding: 10px;
+}
+
+.card img {
+    width: 50%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card .ingredient-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card .ingredient-information h3 {
+    font-size: 1rem;
+}
+
+/* CALCULATOR FOOTER */
+.calc-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+    background-color: var(--color-calc-header);
+    border-bottom-left-radius: 7px;
+}
+
+#calcButton {
+    margin: 20px 0px;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 7px;
+    border: none;
+    box-shadow: 1px 0px 10px 0px lightgray;
+    background-color: #fff;
+}
+
+#calc-button:hover {
+    transform: translateY(-2px);
+}
+
+#clearButton {
+    margin: 20px 0px;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 7px;
+    border: none;
+    box-shadow: 1px 0px 10px 0px lightgray;
+    background-color: #fff;
+}
+
+#clear-button:hover {
+    transform: translateY(-2px);
+}
+
+/* HIDDEN RESUTLS */
+.results-container {
+    position: absolute;
+    width: 55vw;
+    top: -50px;
+    right: -100px;
+    /* background-color: var(--background-color); */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 1px 1px 5px 2px lightgray;
+    border: 2px solid black;
+    display: none;
+    background: #fff;
+}
+
+.results-container.show {
+    display: block;
+    z-index: 0;
+}
+
+#exitButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 30px;
+    height: 30px;
+}
+
+#exitButtonImage {
+    width: 100%;
+    height: 100%;
+    fill: white;
+}
+
+#exitButton:hover {
+    background-color: rgb(86, 86, 253);
+    color: white;
+    cursor: pointer;
+}
+
+.results-header {
+    padding: 15px 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-calc-header);
+    box-shadow: 1px 1px 2px 2px black;
+    gap: 2rem;
+}
+
+#resultsHeaderImg {
+    width: 70px;
+    height: 70px;
+    fill: rgb(248, 164, 54);
+}
+
+.results-header h2 {
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+
+.results {
+    margin: 10px 0px;
+    padding: 0 6px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 100px;
+    grid-auto-rows: 60px;
+    gap: 0.5rem;
+}
+
+.results p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    font-size: 1rem;
+    border-radius: 7px;
+    border: 1px solid black;
+}
+
+.results p.safe {
+    background-color: var(--second-color-calc)
+}
+.total-results-container {
+    padding: 5px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 15px;
+}
+
+.total-results {
+    margin: 7px 0px 7px 10px;
+    flex-basis: 45%;
+    border-radius: 5px;
+    border: 3px solid black;
+}
+
+.total-results h2 {
+    padding: 10px;
+    font-size: 3rem;
+    background-color: var(--color-calc-header);
+    color: white;
+}
+
+.total-results p {
+    padding: 10px;
+    font-size: 1.5rem;
+    color: var(--results-text-color);
+    font-weight: 700;
+    background-color: var(--second-color-calc);
+}
+
+.total-results-image {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.total-results-image svg {
+    width: 50%;
+    height: 50%;
+    fill: var(--color-calc-header);
+}
+
+/* FF = 100% opacity
+CC = 80% opacity
+99 = 60% opacity
+80 = 50% opacity
+66 = 40% opacity
+33 = 20% opacity
+00 = 0% opacity */
